@@ -1,0 +1,69 @@
+<div class="container">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mt-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" [routerLink]="['/inicio']">FORO</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['/inicio']">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/temas']">Temas</a>
+          </li>
+          <li class="nav-item" *ngIf="identity">
+            <a class="nav-link" [routerLink]="['/panel/crear']">Crear temas</a>
+          </li>
+          <li class="nav-item" *ngIf="identity">
+            <a class="nav-link" [routerLink]="['/usuarios']">Ver compañeros</a>
+          </li>
+          <li class="nav-item">
+            <form class="form-inline my-2 my-lg-0" #searchForm="ngForm">
+
+              <input class="form-control me-2" type="search" placeholder="¿Que quieres encontrar?" aria-label="Search" [(ngModel)]="search" #busqueda="ngModel" name="busqueda">
+
+              <button class="btn btn-outline-success" type="submit" (click)="goSearch()">Buscar</button>
+
+            </form>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/registro']" *ngIf="!identity">Registrate</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/iniciar_sesion']" *ngIf="!identity">Iniciar sesión</a>
+          </li>
+          <li class="nav-item">
+            <!-- Imagen del Usuario -->
+            <div class="avatar_mask" *ngIf="identity && identity.image">
+              <img src="{{url+'avatar/'+identity.image}}" alt="Avatar">
+            </div>
+            <div class="avatar_mask" *ngIf="identity && !identity.image">
+              <img src="assets/img/avatar_default.png" alt="Avatar">
+            </div>
+          </li>
+          <li class="nav-item dropdown" *ngIf="identity">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-haspopup="true" data-toggle="dropdown" aria-expanded="false">
+              {{identity.name + " " + identity.surname}}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#" [routerLink]="['/panel']">Panel de usuario</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/ajustes']">Ajustes</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" (click)="logout()">Cerrar sesión</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- CIERRA NAVBAR -->
+
+  <!-- CONTENIDO -->
+  <router-outlet></router-outlet>
+  <!-- CIERRA CONTENIDO -->
+</div>
